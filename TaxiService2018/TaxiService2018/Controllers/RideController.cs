@@ -42,15 +42,13 @@ namespace TaxiService2018.Controllers
 
             
             ViewBag.DriversList = new SelectList(driverList, "Value", "Text");
-            var model = new RideCreateForm();
-            model.DriversList = driverList;
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RideCreateForm form, RideCreateForm model)
+        public ActionResult Create(RideCreateForm form)
         {
             
             var user = (ApplicationUser)Session["User"];
@@ -67,7 +65,6 @@ namespace TaxiService2018.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.DriversList = model.DriversList;
                 return View("Create", form);
                 
             }

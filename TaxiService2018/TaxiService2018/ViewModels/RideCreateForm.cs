@@ -48,6 +48,5 @@ namespace TaxiService2018.ViewModels
         [Display(Name = "Driver")]
         public int DriverId { get; set; }
 
-        public IEnumerable<SelectListItem> DriversList { get; set; }
     }
 }
