@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TaxiService2018.ViewModels;
 using static TaxiService2018.Models.Enums;
 
 namespace TaxiService2018.Models
@@ -41,6 +42,13 @@ namespace TaxiService2018.Models
             Dispatcher = disp;
             Driver = driver;
             Status = RideStatus.Formed;
+        }
+
+        public void Update(SuccesfulRideForm f)
+        {
+            Destination = new Location(f);
+            Price = f.Price;
+            Status = RideStatus.Successful;
         }
     }
 }

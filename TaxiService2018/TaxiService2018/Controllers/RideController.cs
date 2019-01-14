@@ -7,6 +7,7 @@ using TaxiService2018.Database;
 using TaxiService2018.Models;
 using TaxiService2018.ViewModels;
 using static TaxiService2018.Models.Enums;
+using System.Data.Entity;
 
 namespace TaxiService2018.Controllers
 {
@@ -90,7 +91,76 @@ namespace TaxiService2018.Controllers
             return RedirectToAction("Home", "Home");
         }
 
+        [HttpGet]
+        public ActionResult Active()
+        {
+            var user = (ApplicationUser)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
 
+            if (user.Role != UserRole.Driver)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var appRide = db.Rides.Include(r => r.Source).Include(r => r.Dispatcher).FirstOrDefault(r => r.Driver.Id == user.Id && r.Status == RideStatus.Formed);
+            var activeRF = new ActiveRideForm(appRide);
+
+            return View(appRide);
+        }
+
+        [HttpGet]
+        public ActionResult Successful(int id)
+        {
+            var user = (ApplicationUser)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
+
+            if (user.Role != UserRole.Driver)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var successfulF = new SuccesfulRideForm(id);
+
+            return View(successfulF);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Successful(SuccesfulRideForm form)
+        {
+            var user = (ApplicationUser)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
+
+            if (user.Role != UserRole.Driver)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View("Successful", form);
+            }
+
+            var ride = db.Rides.Include(r => r.Driver).SingleOrDefault(r => r.Id == form.IdR);
+            var driver = db.ApplicationUsers.SingleOrDefault(u =>u.Id == ride.Driver.Id);
+            var loc = new Location(form);
+            ride.Update(form);
+            driver.IsDriverBusy = false;
+            Session["User"] = driver;
+            db.SaveChanges();
+
+            return RedirectToAction("Home", "Home");
+        }
 
         protected override void Dispose(bool disposing)
         {

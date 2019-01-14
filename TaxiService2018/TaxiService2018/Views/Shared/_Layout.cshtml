@@ -45,7 +45,7 @@
                         {
                             if (((ApplicationUser)Session["User"]).IsDriverBusy.Value)
                             {
-                                <li>@Html.ActionLink("Ride", "Process", "Ride")</li>
+                                <li>@Html.ActionLink("Ride", "Active", "Ride")</li>
                             }
                             else
                             {

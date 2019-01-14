@@ -27,6 +27,11 @@ namespace TaxiService2018.Models
 
         public int PostalCode { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Street} {StreetNumber}, {City} {PostalCode}, {Longitude} - {Latitude}";
+        }
+
         public Location(LocationEditForm f)
         {
             Latitude = f.Latitude;
@@ -45,6 +50,16 @@ namespace TaxiService2018.Models
             StreetNumber = r.StreetNumber;
             City = r.City;
             PostalCode = r.PostalCode;
+        }
+
+        public Location(SuccesfulRideForm s)
+        {
+            Latitude = s.Latitude;
+            Longitude = s.Longitude;
+            Street = s.Street;
+            StreetNumber = s.StreetNumber;
+            City = s.City;
+            PostalCode = s.PostalCode;
         }
     }
 }
