@@ -12,7 +12,7 @@ namespace TaxiService2018.Database
     {
         public ApplicationDBContext() : base(/*"name = defaultConnection"*/)
         {
-            Database.SetInitializer(new ApplicationDBInitializer());
+            System.Data.Entity.Database.SetInitializer(new ApplicationDBInitializer());
         }
 
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }

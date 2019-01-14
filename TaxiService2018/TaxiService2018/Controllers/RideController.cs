@@ -34,16 +34,25 @@ namespace TaxiService2018.Controllers
             }
 
             var drivers = db.ApplicationUsers.Where(u => u.Role == UserRole.Driver && !u.IsDriverBusy.Value).ToList();
+            if(drivers.Count<1)
+            {
+                return RedirectToAction("Home", "Home");
+            }
             var driverList = drivers.Select(d => new SelectListItem { Text = $"{d.FirstName} {d.LastName}", Value = d.Id.ToString() });
-            ViewBag.DriversList = new SelectList(driverList, "Value", "Text");
 
-            return View();
+            
+            ViewBag.DriversList = new SelectList(driverList, "Value", "Text");
+            var model = new RideCreateForm();
+            model.DriversList = driverList;
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RideCreateForm form)
+        public ActionResult Create(RideCreateForm form, RideCreateForm model)
         {
+            
             var user = (ApplicationUser)Session["User"];
             if (user == null)
             {
@@ -52,22 +61,30 @@ namespace TaxiService2018.Controllers
 
             if (user.Role != UserRole.Dispatcher)
             {
+
                 return new HttpUnauthorizedResult();
             }
 
             if (!ModelState.IsValid)
             {
+                ViewBag.DriversList = model.DriversList;
                 return View("Create", form);
+                
             }
 
             var dbUser = db.ApplicationUsers.SingleOrDefault(u => u.Id == user.Id);
             if (dbUser == null)
             {
+                
                 return HttpNotFound();
             }
 
             var location = new Location(form);
             var driver = db.ApplicationUsers.SingleOrDefault(u => u.Id == form.DriverId);
+            if(driver == null)
+            {
+                return HttpNotFound();
+            }
             var ride = new Ride(location, dbUser, form.VehicleType, driver);
             driver.IsDriverBusy = true;
             db.Rides.Add(ride);

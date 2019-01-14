@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using static TaxiService2018.Models.Enums;
 
 namespace TaxiService2018.ViewModels
@@ -46,5 +47,7 @@ namespace TaxiService2018.ViewModels
         [Range(1, 120)]
         [Display(Name = "Driver")]
         public int DriverId { get; set; }
+
+        public IEnumerable<SelectListItem> DriversList { get; set; }
     }
 }

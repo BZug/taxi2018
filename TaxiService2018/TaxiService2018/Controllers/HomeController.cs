@@ -41,13 +41,11 @@ namespace TaxiService2018.Controllers
             {
                 rides = rides.Where(r => r.Driver.Id == user.Id);
             }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
-            var rideTableRows = new RideTableSingleRow();
 
-            return View("Index", rideTableRows);
+            var rideTableRows = new List<RideTableSingleRow>();
+
+
+            return View("Home", rideTableRows);
         }
 
         protected override void Dispose(bool disposing)
