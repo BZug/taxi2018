@@ -58,6 +58,7 @@ namespace TaxiService2018.Controllers
                 rides = rides.Where(r => r.Driver.Id == user.Id);
             }
 
+
             var rideTableRows = GenerateQuery(rides).ToList().Select(r => new RideTableSingleRow(r));
 
             return View("Home", rideTableRows);
@@ -78,6 +79,7 @@ namespace TaxiService2018.Controllers
         #region query
         private IQueryable<Ride> GenerateQuery(IQueryable<Ride> rides)
         {
+            
             if (Request.QueryString["status"] != null)
             {
                 var status = Request.QueryString["status"];

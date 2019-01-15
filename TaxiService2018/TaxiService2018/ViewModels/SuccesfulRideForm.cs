@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static TaxiService2018.Models.Enums;
 
 namespace TaxiService2018.ViewModels
 {

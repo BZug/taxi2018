@@ -36,5 +36,6 @@ namespace TaxiService2018.Models
             Ride = r;
             Rating = f.Rating;
         }
+
     }
 }
