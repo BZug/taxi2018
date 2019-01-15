@@ -15,7 +15,7 @@ namespace TaxiService2018.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("DriverCreate");
         }
 
         [HttpGet]
