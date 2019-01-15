@@ -20,7 +20,7 @@
         <input class="form-control" id="orderDateMin" name="orderDateMin" placeholder="Min" type="date" value="">
         <input class="form-control" id="orderDateMax" name="orderDateMax" placeholder="Max" type="date" value="">
     </div>
-    <div class="form-group form-group-sm col-md-2">
+    <div class="form-group form-group-sm col-md-1">
         @Html.Label("ratingMin", "Rating")
         @Html.DropDownList("ratingMin", EnumHelper.GetSelectList(typeof(Enums.Rating)), new { @class = "form-control" })
         @Html.DropDownList("ratingMax", EnumHelper.GetSelectList(typeof(Enums.Rating)), new { @class = "form-control" })
@@ -38,6 +38,8 @@
             @Html.TextBox("lastName", "", new { @class = "form-control", @placeholder = "Last Name" })
         </div>
     }
+
+
     <div class="form-group form-group-sm col-md-12">
         <input type="submit" value="Search" class="btn btn-primary" />
     </div>
