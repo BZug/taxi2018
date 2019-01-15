@@ -171,6 +171,7 @@
     <Compile Include="ViewModels\ActiveRideForm.cs" />
     <Compile Include="ViewModels\CreateDriverForm.cs" />
     <Compile Include="ViewModels\EditVehicleForm.cs" />
+    <Compile Include="ViewModels\FailedRideForm.cs" />
     <Compile Include="ViewModels\LocationEditForm.cs" />
     <Compile Include="ViewModels\RideCreateForm.cs" />
     <Compile Include="ViewModels\RideTableSingleRow.cs" />
@@ -221,6 +222,7 @@
     <Content Include="Views\Ride\Create.cshtml" />
     <Content Include="Views\Ride\Active.cshtml" />
     <Content Include="Views\Ride\Successful.cshtml" />
+    <Content Include="Views\Ride\Failed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

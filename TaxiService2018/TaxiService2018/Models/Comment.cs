@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TaxiService2018.ViewModels;
 using static TaxiService2018.Models.Enums;
 
 namespace TaxiService2018.Models
@@ -27,5 +28,13 @@ namespace TaxiService2018.Models
 
         public Rating Rating { get; set; }
 
+        public Comment(FailedRideForm f, ApplicationUser commenter, Ride r)
+        {
+            Description = f.Description;
+            CreationDate = DateTime.Now;
+            Commenter = commenter;
+            Ride = r;
+            Rating = f.Rating;
+        }
     }
 }

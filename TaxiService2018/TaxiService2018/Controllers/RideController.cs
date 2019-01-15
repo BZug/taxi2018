@@ -162,6 +162,55 @@ namespace TaxiService2018.Controllers
             return RedirectToAction("Home", "Home");
         }
 
+        [HttpGet]
+        public ActionResult Failed(int id)
+        {
+            var user = (ApplicationUser)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
+
+            if (user.Role != UserRole.Driver)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var failedRide = new FailedRideForm(id);
+
+            return View(failedRide);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Failed(FailedRideForm form)
+        {
+            var user = (ApplicationUser)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
+
+            if (user.Role != UserRole.Driver)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View("Failed", form);
+            }
+
+            var ride = db.Rides.Include(r => r.Driver).SingleOrDefault(r => r.Id == form.IdR);
+            var driver = db.ApplicationUsers.SingleOrDefault(u => u.Id == ride.Driver.Id);
+            ride.Update(form);
+            driver.IsDriverBusy = false;
+            Session["User"] = driver;
+            db.SaveChanges();
+
+            return RedirectToAction("Home", "Home");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

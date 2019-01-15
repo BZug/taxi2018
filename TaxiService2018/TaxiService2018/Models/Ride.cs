@@ -50,5 +50,11 @@ namespace TaxiService2018.Models
             Price = f.Price;
             Status = RideStatus.Successful;
         }
+
+        public void Update(FailedRideForm f)
+        {
+            Comment = new Comment(f, Driver, this);
+            Status = RideStatus.Failed;
+        }
     }
 }
