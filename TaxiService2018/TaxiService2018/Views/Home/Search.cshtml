@@ -1,0 +1,44 @@
+﻿@model IEnumerable<RideTableSingleRow>
+@{
+    ViewBag.Title = "Search Rides";
+}
+
+@using (Html.BeginForm(((ApplicationUser)Session["User"]).Role == Enums.UserRole.Dispatcher ? "Home" : "Home", "Home", FormMethod.Get))
+{
+    <h4>Search Rides</h4>
+    <hr />
+    <div class="form-group form-group-sm col-md-2">
+        @Html.Label("status", "Status")
+        @Html.DropDownList("status", EnumHelper.GetSelectList(typeof(Enums.RideStatusFilter)), new { @class = "form-control" })
+    </div>
+    <div class="form-group form-group-sm col-md-2">
+        @Html.Label("sortBy", "Sort By")
+        @Html.DropDownList("sortBy", EnumHelper.GetSelectList(typeof(Enums.SortBy)), new { @class = "form-control" })
+    </div>
+    <div class="form-group form-group-sm col-md-2">
+        @Html.Label("orderDateMin", "Order Date")
+        <input class="form-control" id="orderDateMin" name="orderDateMin" placeholder="Min" type="date" value="">
+        <input class="form-control" id="orderDateMax" name="orderDateMax" placeholder="Max" type="date" value="">
+    </div>
+    <div class="form-group form-group-sm col-md-2">
+        @Html.Label("ratingMin", "Rating")
+        @Html.DropDownList("ratingMin", EnumHelper.GetSelectList(typeof(Enums.Rating)), new { @class = "form-control" })
+        @Html.DropDownList("ratingMax", EnumHelper.GetSelectList(typeof(Enums.Rating)), new { @class = "form-control" })
+    </div>
+    <div class="form-group form-group-sm col-md-2">
+        @Html.Label("priceMin", "Price")
+        @Html.TextBox("priceMin", "", new { @class = "form-control", @placeholder = "Min" })
+        @Html.TextBox("priceMax", "", new { @class = "form-control", @placeholder = "Max" })
+    </div>
+    if (((ApplicationUser)Session["User"]).Role == Enums.UserRole.Dispatcher)
+    {
+        <div class="form-group form-group-sm col-md-2">
+            @Html.Label("driver", "Driver")
+            @Html.TextBox("firstName", "", new { @class = "form-control", @placeholder = "First Name" })
+            @Html.TextBox("lastName", "", new { @class = "form-control", @placeholder = "Last Name" })
+        </div>
+    }
+    <div class="form-group form-group-sm col-md-12">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+}
