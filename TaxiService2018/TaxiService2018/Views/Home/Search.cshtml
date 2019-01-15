@@ -3,7 +3,7 @@
     ViewBag.Title = "Search Rides";
 }
 
-@using (Html.BeginForm(((ApplicationUser)Session["User"]).Role == Enums.UserRole.Dispatcher ? "Home" : "Home", "Home", FormMethod.Get))
+@using (Html.BeginForm("Home", "Home", FormMethod.Get))
 {
     <h4>Search Rides</h4>
     <hr />
