@@ -74,5 +74,29 @@ namespace TaxiService2018.Models
         {
             Location = l;
         }
+
+        public ApplicationUser(string txtData)
+        {
+            string[] data = txtData.Split(';');
+            Username = data[0];
+            Password = data[1];
+            FirstName = data[2];
+            LastName = data[3];
+            if (data[4] == "m")
+                Gender = Gender.Male;
+            else
+                Gender = Gender.Female;
+            UMCN = data[5];
+            Phone = data[6];
+            Email = data[7];
+            if(data[8] == "Dispatcher")
+            {
+                Role = UserRole.Dispatcher;
+            }
+            else
+            {
+                Role = UserRole.Driver;
+            }
+        }
     }
 }

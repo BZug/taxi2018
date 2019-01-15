@@ -108,7 +108,7 @@ namespace TaxiService2018.Controllers
             var appRide = db.Rides.Include(r => r.Source).Include(r => r.Dispatcher).FirstOrDefault(r => r.Driver.Id == user.Id && r.Status == RideStatus.Formed);
             var activeRF = new ActiveRideForm(appRide);
 
-            return View(appRide);
+            return View(activeRF);
         }
 
         [HttpGet]

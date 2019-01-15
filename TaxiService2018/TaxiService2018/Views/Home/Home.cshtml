@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Home";
 }
-
+@if (((ApplicationUser)Session["User"]).Role == Enums.UserRole.Driver && ((ApplicationUser)Session["User"]).IsDriverBusy.Value)
+{
+    <div class="alert alert-info">
+        <strong>Ride in progress!</strong> You have been assigned a ride, <a href="~/Ride/Active" class="alert-link">CLICK HERE</a> to finish it!
+    </div>
+}
 @if (Model.Any())
 {
     <h2>Rides</h2>

@@ -9,6 +9,8 @@ using TaxiService2018.Models;
 using static TaxiService2018.Models.Enums;
 using System.Data.Entity;
 using TaxiService2018.ViewModels;
+using System.IO;
+using System.Web.Hosting;
 
 namespace TaxiService2018.Controllers
 {
@@ -18,8 +20,21 @@ namespace TaxiService2018.Controllers
 
         public ActionResult Index()
         {
+            if(db.ApplicationUsers.ToList().Count == 0)
+            {
+                var dispatchers = getDispatchers("~/App_Data/Dispatchers.txt");
+                foreach(var d in dispatchers)
+                {
+                    db.ApplicationUsers.Add(new ApplicationUser(d));
+                }
+                db.SaveChanges();
+            }
             return RedirectToAction("Home");
         }
+
+
+        
+
 
         [HttpGet]
         public ActionResult Home()
@@ -43,7 +58,6 @@ namespace TaxiService2018.Controllers
                 rides = rides.Where(r => r.Driver.Id == user.Id);
             }
 
-            //var rideTableRows = new List<RideTableSingleRow>();
             var rideTableRows = GenerateQuery(rides).ToList().Select(r => new RideTableSingleRow(r));
 
             return View("Home", rideTableRows);
@@ -186,7 +200,25 @@ namespace TaxiService2018.Controllers
             return rides;
         }
         #endregion query
-        
+
+
+        private List<string> getDispatchers(string path)
+        {
+            List<string> lines = new List<string>();
+
+
+            FileStream fileStream = new FileStream(HostingEnvironment.MapPath(path), FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
+            string line = "";
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lines.Add(line);
+            }
+            streamReader.Close();
+            fileStream.Close();
+
+            return lines;
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -1,0 +1,3 @@
+﻿admin;admin;Admin;Adminovski;m;1231231231231;065 656 656;admin@taxiservice.com;Dispatcher
+a2;a2;Drugi;Admin;f;1234567890123;060 000 000;a2@gmo.com;Dispatcher
+a3;a3;Treci;Admin;m;1112223334444;060 000 001;a3@yoopie.com;Dispatcher
